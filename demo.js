@@ -4,32 +4,30 @@
 (() => {
     'use strict'
 
-    const STORAGE_KEY = 'sonnet-pos-demo-v1'
+    const STORAGE_KEY = 'sonnet-pos-demo-v2'
     const CURR = 'GH₵'
 
     const seed = {
-        business: 'Heaven\u2019s Grace Minimart',
+        business: 'Demo Veterinary Consult',
         products: [
-            { id: 'P01', name: 'Pure Water Sachet', cat: 'Beverages', pkg: [{ u: 'sachet', price: 1 }, { u: 'bag (30)', price: 27 }], stock: 240, low: 60 },
-            { id: 'P02', name: 'Mango Popsicle', cat: 'Frozen', pkg: [{ u: 'piece', price: 2 }, { u: 'carton (30)', price: 48 }], stock: 95, low: 30 },
-            { id: 'P03', name: 'Vanilla Ice Pop', cat: 'Frozen', pkg: [{ u: 'piece', price: 2 }, { u: 'carton (30)', price: 48 }], stock: 18, low: 30 },
-            { id: 'P04', name: 'Sausage Roll', cat: 'Bakery', pkg: [{ u: 'piece', price: 3 }], stock: 42, low: 15 },
-            { id: 'P05', name: 'Milk Bread Loaf', cat: 'Bakery', pkg: [{ u: 'loaf', price: 8 }], stock: 27, low: 8 },
-            { id: 'P06', name: 'Vegetable Oil 500ml', cat: 'Groceries', pkg: [{ u: 'bottle', price: 22 }, { u: 'carton (12)', price: 240 }], stock: 64, low: 12 },
-            { id: 'P07', name: 'Tomato Paste 70g', cat: 'Groceries', pkg: [{ u: 'tin', price: 4 }, { u: 'carton (48)', price: 168 }], stock: 210, low: 48 },
-            { id: 'P08', name: 'Rice 1kg', cat: 'Groceries', pkg: [{ u: 'bag', price: 14 }, { u: 'bag (25)', price: 330 }], stock: 130, low: 20 },
-            { id: 'P09', name: 'Granulated Sugar 1kg', cat: 'Groceries', pkg: [{ u: 'bag', price: 12 }, { u: 'bag (20)', price: 220 }], stock: 76, low: 15 },
-            { id: 'P10', name: 'Eggs', cat: 'Groceries', pkg: [{ u: 'crate', price: 95 }], stock: 9, low: 5 },
-            { id: 'P11', name: 'Soft Drink Can', cat: 'Beverages', pkg: [{ u: 'can', price: 5 }, { u: 'crate (24)', price: 108 }], stock: 144, low: 24 },
-            { id: 'P12', name: 'Cooking Salt 500g', cat: 'Groceries', pkg: [{ u: 'pack', price: 3 }, { u: 'carton (60)', price: 150 }], stock: 88, low: 20 }
+            { id: 'P01', name: 'Canine Multi Tabs', brand: 'DemoVet Supplies', cat: 'Supplements', batch: 'DVT-042', expiry: '30 Nov 2028', pkg: [{ u: 'bottle', price: 70 }], stock: 15, low: 8 },
+            { id: 'P02', name: 'Poultry Immune Boost', brand: 'Sample Animal Care', cat: 'Drugs', batch: 'N/A', expiry: 'N/A', pkg: [{ u: 'pack', price: 400 }], stock: 6, low: 8 },
+            { id: 'P03', name: 'Livestock Sterile Wash', brand: 'DemoVet Supplies', cat: 'Tools', batch: 'DVT-018', expiry: '31 Mar 2028', pkg: [{ u: 'bottle', price: 150 }], stock: 0, low: 5 },
+            { id: 'P04', name: 'Dewormer Plus 1L', brand: 'Fictional Farms', cat: 'Drugs', batch: 'DWM-114', expiry: '30 Sep 2029', pkg: [{ u: 'bottle', price: 60 }], stock: 4, low: 8 },
+            { id: 'P05', name: 'Calcium Feed Mix', brand: 'DemoVet Supplies', cat: 'Supplements', batch: 'N/A', expiry: 'N/A', pkg: [{ u: 'bag', price: 320 }], stock: 72, low: 12 },
+            { id: 'P06', name: 'Broiler Starter 25kg', brand: 'Sample Feed Co.', cat: 'Feeds', batch: 'FED-221', expiry: '18 Nov 2026', pkg: [{ u: 'bag', price: 120 }], stock: 103, low: 20 },
+            { id: 'P07', name: 'Clinic Disinfectant Spray', brand: 'Sanivet Demo', cat: 'Tools', batch: 'TLS-030', expiry: '31 Mar 2028', pkg: [{ u: 'bottle', price: 80 }], stock: 18, low: 10 },
+            { id: 'P08', name: 'Electrolyte Powder', brand: 'Sample Animal Care', cat: 'Drugs', batch: 'ELT-009', expiry: '30 Jun 2028', pkg: [{ u: 'sachet', price: 230 }], stock: 0, low: 8 },
+            { id: 'P09', name: 'Tick & Flea Pour-On', brand: 'DemoVet Supplies', cat: 'Drugs', batch: 'TCK-202', expiry: '30 Nov 2028', pkg: [{ u: 'bottle', price: 200 }], stock: 11, low: 8 },
+            { id: 'P10', name: 'Small Animal Vaccine', brand: 'Fictional Biologics', cat: 'Vaccines', batch: 'VAC-620', expiry: '28 Feb 2027', pkg: [{ u: 'vial', price: 220 }], stock: 10, low: 6 },
+            { id: 'P11', name: 'Wound Care Solution', brand: 'Sanivet Demo', cat: 'Drugs', batch: 'WND-075', expiry: '12 Jan 2029', pkg: [{ u: 'bottle', price: 40 }], stock: 39, low: 12 },
+            { id: 'P12', name: 'Poultry Vitamin 1kg', brand: 'Sample Feed Co.', cat: 'Supplements', batch: 'VIT-300', expiry: '05 May 2028', pkg: [{ u: 'pack', price: 420 }], stock: 17, low: 10 }
         ],
         customers: [
-            { id: 'C1', name: 'Ama Serwaa', phone: '020 000 0001', credit: 0, advance: 45 },
-            { id: 'C2', name: 'Kofi Mensah', phone: '020 000 0002', credit: 132, advance: 0 },
-            { id: 'C3', name: 'Esi Boateng', phone: '020 000 0003', credit: 0, advance: 0 },
-            { id: 'C4', name: 'Kwame Asante', phone: '020 000 0004', credit: 58, advance: 0 },
-            { id: 'C5', name: 'Abena Owusu', phone: '020 000 0005', credit: 0, advance: 20 },
-            { id: 'C6', name: 'Yaw Darko', phone: '020 000 0006', credit: 300, advance: 0 }
+            { id: 'C1', name: 'Walk-in Pet Owner', phone: '000 000 0000', credit: 0, advance: 45 },
+            { id: 'C2', name: 'Sample Poultry Farm', phone: '000 000 0000', credit: 132, advance: 0 },
+            { id: 'C3', name: 'Demo Livestock Buyer', phone: '000 000 0000', credit: 0, advance: 0 },
+            { id: 'C4', name: 'Fictional Kennel Account', phone: '000 000 0000', credit: 58, advance: 0 }
         ],
         sales: seedSales()
     }
@@ -37,11 +35,11 @@
     function seedSales() {
         const t = Date.now()
         return [
-            { id: 'S010', at: t - 2 * 3600e3, items: [{ pid: 'P02', u: 'piece', q: 4, p: 2 }], disc: 0, pay: 'cash', cust: null },
-            { id: 'S011', at: t - 4 * 3600e3, items: [{ pid: 'P01', u: 'sachet', q: 10, p: 1 }, { pid: 'P04', u: 'piece', q: 2, p: 3 }], disc: 0, pay: 'momo', cust: 'C1' },
-            { id: 'S012', at: t - 6 * 3600e3, items: [{ pid: 'P08', u: 'bag', q: 1, p: 14 }, { pid: 'P09', u: 'bag', q: 2, p: 12 }], disc: 2, pay: 'credit', cust: 'C2' },
-            { id: 'S013', at: t - 26 * 3600e3, items: [{ pid: 'P11', u: 'crate (24)', q: 1, p: 108 }], disc: 0, pay: 'cash', cust: null },
-            { id: 'S014', at: t - 27 * 3600e3, items: [{ pid: 'P06', u: 'bottle', q: 2, p: 22 }], disc: 0, pay: 'advance', cust: 'C5' }
+            { id: 'S010', at: t - 2 * 3600e3, items: [{ pid: 'P01', u: 'bottle', q: 3, p: 70 }], disc: 0, pay: 'cash', cust: null },
+            { id: 'S011', at: t - 4 * 3600e3, items: [{ pid: 'P06', u: 'bag', q: 2, p: 120 }], disc: 0, pay: 'momo', cust: 'C3' },
+            { id: 'S012', at: t - 6 * 3600e3, items: [{ pid: 'P09', u: 'bottle', q: 1, p: 200 }, { pid: 'P11', u: 'bottle', q: 2, p: 40 }], disc: 10, pay: 'credit', cust: 'C2' },
+            { id: 'S013', at: t - 26 * 3600e3, items: [{ pid: 'P12', u: 'pack', q: 1, p: 420 }], disc: 0, pay: 'cash', cust: null },
+            { id: 'S014', at: t - 27 * 3600e3, items: [{ pid: 'P04', u: 'bottle', q: 1, p: 60 }], disc: 0, pay: 'advance', cust: 'C1' }
         ]
     }
 
@@ -62,10 +60,11 @@
 
     const els = {
         dashDate: document.getElementById('dash-date'),
+        kpiProducts: document.getElementById('kpi-products'),
         kpiSales: document.getElementById('kpi-sales'),
-        kpiTx: document.getElementById('kpi-tx'),
         kpiCredit: document.getElementById('kpi-credit'),
         kpiLow: document.getElementById('kpi-low'),
+        kpiOut: document.getElementById('kpi-out'),
         bestSellers: document.getElementById('best-sellers'),
         recentSales: document.getElementById('recent-sales'),
         posSearch: document.getElementById('pos-search'),
@@ -77,14 +76,18 @@
         cartDisc: document.getElementById('cart-disc'),
         cartTotal: document.getElementById('cart-total'),
         checkCustomer: document.getElementById('check-customer'),
+        paymentSelect: document.getElementById('payment-select'),
         payMethods: document.getElementById('pay-methods'),
         momoRef: document.getElementById('momo-ref'),
         checkMomo: document.getElementById('check-momo'),
         completeSale: document.getElementById('complete-sale'),
         checkoutHint: document.getElementById('checkout-hint'),
+        productsSearch: document.getElementById('products-search'),
+        productsFilter: document.getElementById('products-filter'),
         productsTbody: document.getElementById('products-tbody'),
-        custList: document.getElementById('cust-list'),
-        custDetail: document.getElementById('cust-detail'),
+        reportCount: document.getElementById('report-count'),
+        reportRevenue: document.getElementById('report-revenue'),
+        reportAverage: document.getElementById('report-average'),
         reportSummary: document.getElementById('report-summary'),
         reportPayments: document.getElementById('report-payments'),
         reportSellers: document.getElementById('report-sellers'),
@@ -100,9 +103,27 @@
         btn.addEventListener('click', () => {
             document.querySelectorAll('.demo-nav-item').forEach((b) => b.classList.toggle('active', b === btn))
             document.querySelectorAll('.demo-view').forEach((v) => v.classList.toggle('active', v.id === 'view-' + btn.dataset.view))
+            closeDrawer()
             window.scrollTo({ top: 0 })
         })
     })
+
+    const drawerToggle = document.getElementById('demo-drawer-toggle')
+    const drawer = document.getElementById('demo-sidebar')
+    const drawerBackdrop = document.getElementById('demo-drawer-backdrop')
+    function closeDrawer() {
+        drawer.classList.remove('open')
+        drawerToggle.setAttribute('aria-expanded', 'false')
+        drawerBackdrop.hidden = true
+    }
+    drawerToggle.addEventListener('click', () => {
+        const open = !drawer.classList.contains('open')
+        drawer.classList.toggle('open', open)
+        drawerToggle.setAttribute('aria-expanded', String(open))
+        drawerBackdrop.hidden = !open
+    })
+    drawerBackdrop.addEventListener('click', closeDrawer)
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer() })
 
     /* ---------- helpers ---------- */
     const todayRange = () => {
@@ -122,11 +143,12 @@
         const [start, end] = todayRange()
         const today = state.sales.filter((s) => s.at >= start && s.at <= end)
         const sales = today.reduce((sum, s) => sum + saleNet(s), 0)
+        els.kpiProducts.textContent = state.products.length
         els.kpiSales.textContent = fmt(sales)
-        els.kpiTx.textContent = today.length
         els.kpiCredit.textContent = fmt(state.customers.reduce((s, c) => s + c.credit, 0))
         els.kpiLow.textContent = lowStock().length
-        els.dashDate.textContent = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+        els.kpiOut.textContent = state.products.filter((p) => p.stock <= 0).length
+        els.dashDate.textContent = new Date().toLocaleString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 
         const byPid = {}
         state.sales.forEach((s) => s.items.forEach((it) => { byPid[it.pid] = (byPid[it.pid] || 0) + it.q }))
@@ -145,8 +167,8 @@
 
     /* ---------- POS ---------- */
     function renderChips() {
-        const cats = ['all', ...new Set(state.products.map((p) => p.cat))]
-        els.catChips.innerHTML = cats.map((c) => `<button class="chip${c === activeCat ? ' active' : ''}" data-cat="${c}">${c === 'all' ? 'All' : c}</button>`).join('')
+        const cats = ['all', 'Drugs', 'Vaccines', 'Feeds', 'Tools', 'Supplements']
+        els.catChips.innerHTML = cats.map((c) => `<button type="button" class="chip${c === activeCat ? ' active' : ''}" data-cat="${c}">${c === 'all' ? 'All' : c}</button>`).join('')
         els.catChips.querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => { activeCat = b.dataset.cat; renderChips(); renderProducts() }))
     }
 
@@ -159,11 +181,11 @@
     function renderProducts() {
         const list = visibleProducts()
         els.prodGrid.innerHTML = list.map((p) => `
-            <div class="prod-card${p.stock <= p.low ? ' low' : ''}" data-pid="${p.id}">
+            <div class="prod-card${p.stock <= 0 ? ' out' : p.stock <= p.low ? ' low' : ''}" data-pid="${p.id}">
                 <strong class="pc-name">${p.name}</strong>
                 <span class="pc-cat">${p.cat}</span><span class="pc-stock">${p.stock} in stock</span>
                 <div class="pc-pkgs">${p.pkg.map((k, i) =>
-                    `<button class="pkg" data-pid="${p.id}" data-idx="${i}" ${p.stock <= 0 ? 'disabled' : ''}>${k.u}<br><b>${fmt(k.price)}</b></button>`).join('')}</div>
+                    `<button type="button" class="pkg" data-pid="${p.id}" data-idx="${i}" ${p.stock <= 0 ? 'disabled' : ''}>${k.u}<br><b>${fmt(k.price)}</b></button>`).join('')}</div>
             </div>`).join('') || '<p class="empty">No products match your search.</p>'
         els.prodGrid.querySelectorAll('.pkg').forEach((b) => b.addEventListener('click', () => addToCart(b.dataset.pid, +b.dataset.idx)))
     }
@@ -213,6 +235,11 @@
     els.payMethods.querySelectorAll('input[name="pm"]').forEach((r) => r.addEventListener('change', () => {
         els.momoRef.hidden = r.value !== 'momo'
     }))
+    els.paymentSelect.addEventListener('change', () => {
+        const radio = els.payMethods.querySelector(`input[value="${els.paymentSelect.value}"]`)
+        if (radio) radio.checked = true
+        els.momoRef.hidden = els.paymentSelect.value !== 'momo'
+    })
 
     /* ---------- checkout ---------- */
     els.completeSale.addEventListener('click', () => {
@@ -258,7 +285,7 @@
         cart = []
         els.cartDisc.value = '0'
         els.checkMomo.value = ''
-        renderCart(); renderDashboard(); renderProducts(); renderCustomers(); renderReports(); fillCustomers()
+        renderCart(); renderDashboard(); renderProducts(); renderProductsTable(); renderReports(); fillCustomers()
         showReceipt(sale)
     })
 
@@ -298,65 +325,27 @@
 
     /* ---------- products table ---------- */
     function renderProductsTable() {
-        els.productsTbody.innerHTML = state.products.map((p) => {
-            const pkgs = p.pkg.map((k) => `${k.u} @ ${fmt(k.price)}`).join(' · ')
-            const st = p.stock <= 0 ? '<span class="badge badge-red">Out of stock</span>'
-                : p.stock <= p.low ? '<span class="badge badge-amber">Low stock</span>'
-                : '<span class="badge badge-green">In stock</span>'
-            return `<tr><td><b>${p.name}</b></td><td>${p.cat}</td><td>${pkgs}</td><td class="ra">${fmt(p.pkg[0].price)}</td><td class="ra">${p.stock}</td><td>${st}</td></tr>`
+        const q = (els.productsSearch.value || '').toLowerCase().trim()
+        const cat = els.productsFilter.value
+        const list = state.products.filter((p) => (!q || p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q)) && (cat === 'All Categories' || p.cat === cat))
+        els.productsTbody.innerHTML = list.map((p) => {
+            const stockClass = p.stock <= 0 ? 'stock-out' : p.stock <= p.low ? 'stock-low' : 'stock-ok'
+            return `<tr><td><b>${p.name}</b><small>${p.brand}</small></td><td><span class="category-pill">${p.cat}</span></td><td>${p.batch}</td><td>${p.expiry}</td><td class="${stockClass}">${p.stock} units</td><td class="price">${fmt(p.pkg[0].price)}</td></tr>`
         }).join('')
     }
+
+    function fillProductFilter() {
+        const cats = ['All Categories', ...new Set(state.products.map((p) => p.cat))]
+        els.productsFilter.innerHTML = cats.map((c) => `<option>${c}</option>`).join('')
+    }
+
+    els.productsSearch.addEventListener('input', renderProductsTable)
+    els.productsFilter.addEventListener('change', renderProductsTable)
 
     /* ---------- customers ---------- */
     function fillCustomers() {
         els.checkCustomer.innerHTML = '<option value="">Walk-in customer</option>' +
             state.customers.map((c) => `<option value="${c.id}">${c.name}${c.credit ? ` — owes ${fmt(c.credit)}` : c.advance ? ` — advance ${fmt(c.advance)}` : ''}</option>`).join('')
-    }
-
-    function renderCustomers() {
-        els.custList.innerHTML = state.customers.map((c) => `
-            <li class="cust-item" data-cid="${c.id}" tabindex="0">
-                <strong>${c.name}</strong>
-                <span class="cs-phone">${c.phone}</span>
-                <span class="cs-bal${c.credit ? ' bad' : ''}">${c.credit ? 'Owes ' + fmt(c.credit) : c.advance ? 'Advance ' + fmt(c.advance) : 'No balance'}</span>
-            </li>`).join('')
-        els.custList.querySelectorAll('.cust-item').forEach((li) => li.addEventListener('click', () => renderCustomerDetail(li.dataset.cid)))
-    }
-
-    function renderCustomerDetail(cid) {
-        const c = customerById(cid)
-        const led = state.sales.filter((s) => s.cust === cid).sort((a, b) => a.at - b.at)
-        const rows = led.length ? led.map((s) => {
-            const t = saleNet(s)
-            const sign = s.pay === 'credit' ? `+${fmt(t)}` : `−${fmt(t)}`
-            const kind = s.pay === 'credit' ? 'Credit sale' : s.pay === 'advance' ? 'Used advance' : 'Sale'
-            return `<tr><td>${pretty(s.at)}</td><td>${s.id}</td><td>${kind}</td><td class="ra">${sign}</td></tr>`
-        }).join('') : `<tr><td colspan="4" class="empty">No recorded sales for this customer.</td></tr>`
-        els.custDetail.innerHTML = `
-            <div class="cust-head">
-                <div><h2>${c.name}</h2><span class="cs-phone">${c.phone}</span></div>
-                <div class="cust-nums">
-                    <span class="k">Outstanding<br><b class="v v-red">${fmt(c.credit)}</b></span>
-                    <span class="k">Advance<br><b class="v v-green">${fmt(c.advance)}</b></span>
-                </div>
-            </div>
-            <p class="hint">Payments against credit are recorded by staff in the full system. Record one here to see the ledger update:</p>
-            <div class="pay-line">
-                <input id="cust-pay" type="number" min="0" value="0" aria-label="Payment amount" style="width:110px">
-                <button class="btn btn-ghost btn-small" id="cust-pay-go" type="button">Record payment</button>
-            </div>
-            <div class="table-scroll"><table class="demo-table">
-                <thead><tr><th>When</th><th>Sale</th><th>Kind</th><th>Movement</th></tr></thead>
-                <tbody>${rows}</tbody>
-            </table></div>`
-        document.getElementById('cust-pay-go').addEventListener('click', () => {
-            const amt = Math.max(0, parseFloat(document.getElementById('cust-pay').value) || 0)
-            if (amt <= 0) return
-            const toDebt = Math.min(c.credit, amt)
-            c.credit -= toDebt
-            c.advance += amt - toDebt
-            save(); renderCustomers(); renderDashboard(); renderCustomerDetail(cid); fillCustomers()
-        })
     }
 
     /* ---------- reports ---------- */
@@ -365,6 +354,9 @@
         const gross = sales.reduce((s, x) => s + saleNet(x), 0)
         const tx = sales.length
         const avg = tx ? gross / tx : 0
+        els.reportCount.textContent = tx
+        els.reportRevenue.textContent = fmt(gross)
+        els.reportAverage.textContent = fmt(avg)
         els.reportSummary.innerHTML = `
             <li><span class="nm">Total sales recorded</span><span class="qt">${fmt(gross)}</span></li>
             <li><span class="nm">Transactions</span><span class="qt">${tx}</span></li>
@@ -400,7 +392,7 @@
     })
 
     function renderAll() {
-        renderDashboard(); renderChips(); renderProducts(); renderCart(); renderProductsTable(); renderCustomers(); fillCustomers(); renderReports()
+        fillProductFilter(); renderDashboard(); renderChips(); renderProducts(); renderCart(); renderProductsTable(); fillCustomers(); renderReports()
     }
 
     renderAll()
