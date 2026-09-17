@@ -101,38 +101,43 @@
 
                 <div class="pos-visual reveal" aria-hidden="true">
                     <div class="pos-visual-frame">
-                        <div class="pv-head">
-                            <div class="pv-dots"><i></i><i></i><i></i></div>
-                            <span class="pv-title">Sonnet POS — operator dashboard</span>
+                        <div class="pv-sidebar">
+                            <span class="pv-nav active">Dashboard</span>
+                            <span class="pv-nav">Products</span>
+                            <span class="pv-nav">POS</span>
+                            <span class="pv-nav">Reports</span>
                         </div>
-                        <div class="pv-kpis">
-                            <div class="pv-kpi"><span class="k">Sales today</span><span class="v up">GH₵ 12,480</span></div>
-                            <div class="pv-kpi"><span class="k">Outstanding credit</span><span class="v">GH₵ 3,215</span></div>
-                            <div class="pv-kpi"><span class="k">Low stock</span><span class="v alert">6 items</span></div>
-                        </div>
-                        <div class="pv-body">
-                            <div class="pv-receipt">
-                                <div class="r-head">HEAVENS GRACE MINIMART</div>
-                                <div class="r-line"><span>Fan Ice Vanilla</span><span>x2</span></div>
-                                <div class="r-line"><span>Milk Bread</span><span>x1</span></div>
-                                <div class="r-line"><span>Pure Water</span><span>x6</span></div>
-                                <div class="r-dash"></div>
-                                <div class="r-line"><span>Subtotal</span><span>42.00</span></div>
-                                <div class="r-line"><span>Momo ref 885211</span><span>-42.00</span></div>
-                                <div class="r-total"><span>TOTAL</span><span>GH₵ 0.00</span></div>
-                                <div class="r-center">Thank you! &middot; Cashier: Ama</div>
+                        <div class="pv-app">
+                            <div class="pv-topbar">
+                                <span class="pv-brand">Sonnet POS Demo</span>
+                                <span class="pv-user">Demo Operator</span>
                             </div>
-                            <div class="pv-side">
-                                <div class="pv-row"><span class="w-86">Cash sales</span><span class="bar"><i class="b-82"></i></span></div>
-                                <div class="pv-row"><span class="w-86">Momo sales</span><span class="bar"><i class="b-64"></i></span></div>
-                                <div class="pv-row"><span class="w-86">Credit sales</span><span class="bar"><i class="b-38"></i></span></div>
-                                <div class="pv-row"><span class="w-86">Advance used</span><span class="bar"><i class="b-22"></i></span></div>
+                            <div class="pv-content">
+                                <div class="pv-title-row">
+                                    <div><strong>Dashboard</strong><span>Fictional sample data</span></div>
+                                    <em>Guest demo</em>
+                                </div>
+                                <div class="pv-kpis">
+                                    <div class="pv-kpi blue"><span class="k">Total Products</span><span class="v">12</span></div>
+                                    <div class="pv-kpi gold"><span class="k">Low Stock Items</span><span class="v">3</span></div>
+                                    <div class="pv-kpi red"><span class="k">Out of Stock</span><span class="v">2</span></div>
+                                    <div class="pv-kpi green"><span class="k">Today's Sales</span><span class="v">GH₵ 530</span></div>
+                                </div>
+                                <div class="pv-pos-grid">
+                                    <div class="pv-products">
+                                        <div class="pv-search">Search products...</div>
+                                        <div class="pv-card"><b>Canine Multi Tabs</b><span>Supplements</span><strong>GH₵ 70.00</strong><small>Stock: 15</small></div>
+                                        <div class="pv-card low"><b>Dewormer Plus 1L</b><span>Drugs</span><strong>GH₵ 60.00</strong><small>Stock: 4</small></div>
+                                    </div>
+                                    <div class="pv-cart">
+                                        <b>Shopping Cart</b>
+                                        <span>Subtotal <strong>GH₵ 70.00</strong></span>
+                                        <span>Total <strong>GH₵ 70.00</strong></span>
+                                        <i>View Receipt</i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="pv-float">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z" /></svg>
-                        Built for Accra &amp; beyond
                     </div>
                 </div>
             </div>
@@ -255,17 +260,17 @@
                         </div>
                         <div class="dp-cols">
                             <div class="dp-prods">
-                                <div class="dp-prod"><div class="n">Fan Ice Vanilla</div><div class="p">GH₵ 3.50 · 148 left</div></div>
-                                <div class="dp-prod"><div class="n">Pure Water Sachet</div><div class="p">GH₵ 1.00 · 320 left</div></div>
-                                <div class="dp-prod"><div class="n">Gala Sausage Roll</div><div class="p low">GH₵ 4.00 · 8 left</div></div>
-                                <div class="dp-prod"><div class="n">Milk Bread</div><div class="p low">GH₵ 5.00 · 5 left</div></div>
+                                <div class="dp-prod"><div class="n">Canine Multi Tabs</div><div class="p">GH₵ 70.00 · 15 left</div></div>
+                                <div class="dp-prod"><div class="n">Dewormer Plus 1L</div><div class="p low">GH₵ 60.00 · 4 left</div></div>
+                                <div class="dp-prod"><div class="n">Poultry Immune Boost</div><div class="p low">GH₵ 400.00 · 6 left</div></div>
+                                <div class="dp-prod"><div class="n">Broiler Starter 25kg</div><div class="p">GH₵ 120.00 · 103 left</div></div>
                             </div>
                             <div class="dp-cart">
-                                <div class="row"><span>Fan Ice Vanilla ×2</span><span>7.00</span></div>
-                                <div class="row"><span>Pure Water ×6</span><span>6.00</span></div>
-                                <div class="row"><span>Milk Bread ×1</span><span>5.00</span></div>
-                                <div class="row"><span>Discount</span><span>-2.00</span></div>
-                                <div class="tot"><span>Total</span><span>GH₵ 16.00</span></div>
+                                <div class="row"><span>Canine Multi Tabs ×3</span><span>210.00</span></div>
+                                <div class="row"><span>Broiler Starter ×2</span><span>240.00</span></div>
+                                <div class="row"><span>Wound Care Solution ×1</span><span>40.00</span></div>
+                                <div class="row"><span>Discount</span><span>-10.00</span></div>
+                                <div class="tot"><span>Total</span><span>GH₵ 480.00</span></div>
                                 <span class="pay">Complete Sale</span>
                             </div>
                         </div>
