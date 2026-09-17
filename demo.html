@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS System Demo | Sonnet Solutions Ghana Limited</title>
+    <meta name="description"
+        content="Interactive demo of the Sonnet POS and management system. Explore sales, inventory, customers, credit and reports using fictional sample data.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.sonnetghana.com/demo">
+    <meta name="theme-color" content="#0b0b0a">
+    <link rel="icon" type="image/x-icon" href="LOGO/3-colors-Black-Bg.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="demo.css">
+</head>
+
+<body class="demo-body">
+    <div class="demo-shell">
+        <div class="demo-topbar">
+            <div class="demo-topbar-inner">
+                <a class="logo" href="index.html"><img src="LOGO/REMOVED.png" alt="Sonnet Solutions logo"></a>
+                <div class="demo-name">
+                    <strong>Sonnet POS</strong>
+                    <span class="demo-badge">GUEST DEMO &middot; FICTIONAL DATA</span>
+                </div>
+                <div class="demo-top-actions">
+                    <button class="btn btn-ghost btn-small" id="reset-demo" type="button">Reset demo data</button>
+                    <a class="btn btn-primary btn-small" href="contact.html">Request Your Own System</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-layout">
+            <nav class="demo-nav" aria-label="Demo sections">
+                <button type="button" class="demo-nav-item active" data-view="dashboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+                    Dashboard
+                </button>
+                <button type="button" class="demo-nav-item" data-view="pos">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M8 6h.01M8 13h.01"/></svg>
+                    New Sale
+                </button>
+                <button type="button" class="demo-nav-item" data-view="products">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+                    Products &amp; Stock
+                </button>
+                <button type="button" class="demo-nav-item" data-view="customers">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1"/><path d="M15 8a3 3 0 1 1-1.5 5.6" opacity=".6"/></svg>
+                    Customers
+                </button>
+                <button type="button" class="demo-nav-item" data-view="reports">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-6M21 20H3"/></svg>
+                    Reports
+                </button>
+            </nav>
+
+            <main class="demo-main">
+                <div class="demo-notice">
+                    This is an interactive demonstration using fictional sample data. Nothing here is connected to a real
+                    business, and no account or login is needed. <a href="contact.html">Request a personalised demo →</a>
+                </div>
+
+                <section class="demo-view active" id="view-dashboard" aria-label="Dashboard">
+                    <header class="view-head">
+                        <h1>Dashboard</h1>
+                        <p id="dash-date" class="view-sub"></p>
+                    </header>
+                    <div class="kpi-grid">
+                        <div class="kpi"><span class="k">Sales today</span><strong class="v" id="kpi-sales">—</strong><span class="s">from demo records</span></div>
+                        <div class="kpi"><span class="k">Transactions</span><strong class="v" id="kpi-tx">—</strong><span class="s">today</span></div>
+                        <div class="kpi"><span class="k">Outstanding credit</span><strong class="v v-red" id="kpi-credit">—</strong><span class="s">across all customers</span></div>
+                        <div class="kpi"><span class="k">Low stock</span><strong class="v v-amber" id="kpi-low">—</strong><span class="s">below threshold</span></div>
+                    </div>
+                    <div class="dash-cols">
+                        <div class="panel">
+                            <h2>Today&rsquo;s best sellers</h2>
+                            <ul class="leader-list" id="best-sellers"><li class="empty">No sales recorded yet.</li></ul>
+                        </div>
+                        <div class="panel">
+                            <h2>Recent sales</h2>
+                            <ul class="recent-list" id="recent-sales"><li class="empty">No sales recorded yet.</li></ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="demo-view" id="view-pos" aria-label="New sale">
+                    <header class="view-head">
+                        <h1>New sale</h1>
+                        <p class="view-sub">Add products, choose a package, then checkout with cash, Mobile Money, credit or an advance balance.</p>
+                    </header>
+                    <div class="pos-grid">
+                        <div class="pos-left">
+                            <div class="field">
+                                <label for="pos-search">Search products</label>
+                                <input id="pos-search" type="search" placeholder="Type a product name…">
+                            </div>
+                            <div class="cat-chips" id="cat-chips"></div>
+                            <div class="prod-grid" id="prod-grid"></div>
+                        </div>
+                        <div class="pos-cart panel">
+                            <h2>Current sale</h2>
+                            <div id="cart-empty" class="empty">Scan or tap products to add them.</div>
+                            <ul id="cart-items" class="cart-items"></ul>
+                            <div class="cart-foot">
+                                <div class="cart-row"><span>Subtotal</span><strong id="cart-sub">GH₵ 0.00</strong></div>
+                                <div class="cart-row">
+                                    <span>Discount (GH₵)</span>
+                                    <input id="cart-disc" type="number" min="0" value="0" aria-label="Discount amount">
+                                </div>
+                                <div class="cart-row tot"><span>Total</span><strong id="cart-total">GH₵ 0.00</strong></div>
+                                <div class="checkout-block">
+                                    <div class="field">
+                                        <label for="check-customer">Customer</label>
+                                        <select id="check-customer"><option value="">Walk-in customer</option></select>
+                                    </div>
+                                    <div class="pay-methods" id="pay-methods">
+                                        <label class="pay-opt"><input type="radio" name="pm" value="cash" checked><span>Cash</span></label>
+                                        <label class="pay-opt"><input type="radio" name="pm" value="momo"><span>Mobile Money</span></label>
+                                        <label class="pay-opt"><input type="radio" name="pm" value="credit"><span>Credit</span></label>
+                                        <label class="pay-opt"><input type="radio" name="pm" value="advance"><span>Advance</span></label>
+                                    </div>
+                                    <div class="field momo-ref" id="momo-ref" hidden>
+                                        <label for="check-momo">Mobile Money reference</label>
+                                        <input id="check-momo" type="text" placeholder="e.g. MoMo reference number" maxlength="24" aria-describedby="momo-note">
+                                        <small id="momo-note" class="hint">In the demo, Mobile Money is recorded manually. A live deployment can link to a provider.</small>
+                                    </div>
+                                    <button class="btn btn-primary btn-block" id="complete-sale" type="button">Complete sale</button>
+                                    <p class="hint" id="checkout-hint"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="demo-view" id="view-products" aria-label="Products and stock">
+                    <header class="view-head">
+                        <h1>Products &amp; stock</h1>
+                        <p class="view-sub">Every product carries packages, price and a live stock level with low-stock flags.</p>
+                    </header>
+                    <div class="panel">
+                        <div class="table-scroll">
+                            <table class="demo-table">
+                                <thead>
+                                    <tr><th>Product</th><th>Category</th><th>Packages</th><th>Price</th><th>Stock</th><th>Status</th></tr>
+                                </thead>
+                                <tbody id="products-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="demo-view" id="view-customers" aria-label="Customers">
+                    <header class="view-head">
+                        <h1>Customers</h1>
+                        <p class="view-sub">Credit balances, advances and ledgers. Balances below are sample data.</p>
+                    </header>
+                    <div class="cust-layout">
+                        <div class="panel">
+                            <ul class="cust-list" id="cust-list"></ul>
+                        </div>
+                        <div class="panel" id="cust-detail">
+                            <p class="empty">Select a customer to view their ledger.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="demo-view" id="view-reports" aria-label="Reports">
+                    <header class="view-head">
+                        <h1>Reports</h1>
+                        <p class="view-sub">Sales, best sellers, low stock and payment mix across all demo records.</p>
+                    </header>
+                    <div class="dash-cols">
+                        <div class="panel">
+                            <h2>Sales summary</h2>
+                            <ul class="stats-list" id="report-summary"></ul>
+                        </div>
+                        <div class="panel">
+                            <h2>Payment mix</h2>
+                            <ul class="stats-list" id="report-payments"></ul>
+                        </div>
+                    </div>
+                    <div class="panel mt-1">
+                        <h2>Best sellers (all time)</h2>
+                        <ul class="leader-list" id="report-sellers"></ul>
+                    </div>
+                    <div class="panel mt-1">
+                        <h2>Low stock</h2>
+                        <ul class="leader-list" id="report-low"></ul>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <template id="receipt-template">
+        <div class="receipt" role="dialog" aria-modal="true" aria-labelledby="r-title">
+            <div class="receipt-pane">
+                <div class="receipt-head">
+                    <h2 id="r-title">Sale completed</h2>
+                    <button type="button" class="modal-close" id="r-close" aria-label="Close receipt">×</button>
+                </div>
+                <div class="receipt-paper" id="receipt-paper"></div>
+                <div class="receipt-actions">
+                    <button class="btn btn-ghost" id="r-close-btn" type="button">Continue</button>
+                    <button class="btn btn-primary" id="r-print" type="button">Print receipt</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="demo.js"></script>
+</body>
+
+</html>
