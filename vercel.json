@@ -1,21 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
   "headers": [
     {
-      "source": "/demo",
+      "source": "/(.*)",
       "headers": [
         {
           "key": "X-Robots-Tag",
-          "value": "noindex"
+          "value": "noindex, nofollow, noarchive"
         }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/demo",
-      "destination": "/demo.html"
     }
   ]
 }
