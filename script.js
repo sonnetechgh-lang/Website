@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Maintenance banner
+    const banner = document.querySelector('.maintenance-banner');
+    if (banner) {
+        const setBannerOffset = () => {
+            document.documentElement.style.setProperty('--banner-height', banner.offsetHeight + 'px');
+        };
+        setBannerOffset();
+        window.addEventListener('resize', setBannerOffset);
+
+        const closeBtn = banner.querySelector('.mb-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                document.body.classList.add('maintenance-hidden');
+                document.documentElement.style.setProperty('--banner-height', '0px');
+            });
+        }
+    }
+
     // Scroll Animations
     const observerOptions = {
         threshold: 0.1,
