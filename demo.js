@@ -80,7 +80,10 @@
         payMethods: document.getElementById('pay-methods'),
         momoRef: document.getElementById('momo-ref'),
         checkMomo: document.getElementById('check-momo'),
+        amountPaid: document.getElementById('amount-paid'),
         completeSale: document.getElementById('complete-sale'),
+        receiptReady: document.getElementById('receipt-ready'),
+        viewReceipt: document.getElementById('view-receipt'),
         checkoutHint: document.getElementById('checkout-hint'),
         productsSearch: document.getElementById('products-search'),
         productsFilter: document.getElementById('products-filter'),
@@ -97,6 +100,7 @@
 
     let cart = []
     let activeCat = 'all'
+    let lastSale = null
 
     /* ---------- navigation ---------- */
     document.querySelectorAll('.demo-nav-item').forEach((btn) => {
@@ -252,6 +256,8 @@
         const total = sub - disc
         const custId = els.checkCustomer.value
         const cust = custId ? customerById(custId) : null
+        const typedPaid = parseFloat(els.amountPaid.value)
+        const paid = Number.isFinite(typedPaid) && typedPaid > 0 ? typedPaid : (pm === 'credit' ? 0 : total)
 
         if (pm === 'credit' && cust) {
             if (cust.credit + total > 500) { hint.textContent = `${cust.name} exceeds the ${fmt(500)} credit limit. The full system enforces per-customer limits.`; return }
@@ -272,7 +278,8 @@
             disc,
             pay: pm,
             cust: cust ? custId : null,
-            momoRef: pm === 'momo' ? els.checkMomo.value.trim() : null
+            momoRef: pm === 'momo' ? els.checkMomo.value.trim() : null,
+            paid
         }
         state.sales.push(sale)
 
@@ -285,9 +292,14 @@
         cart = []
         els.cartDisc.value = '0'
         els.checkMomo.value = ''
+        els.amountPaid.value = ''
+        lastSale = sale
+        els.receiptReady.hidden = false
+        els.checkoutHint.textContent = 'Sale saved in this browser only. Open the receipt preview when ready.'
         renderCart(); renderDashboard(); renderProducts(); renderProductsTable(); renderReports(); fillCustomers()
-        showReceipt(sale)
     })
+
+    els.viewReceipt.addEventListener('click', () => { if (lastSale) showReceipt(lastSale) })
 
     function showReceipt(sale) {
         const tmpl = document.getElementById('receipt-template')
@@ -296,27 +308,58 @@
         const paper = receipt.querySelector('#receipt-paper')
         const lines = () => sale.items.map((it) => {
             const p = productById(it.pid)
-            return `<tr><td>${p.name}<br><small>${it.u} × ${it.q} @ ${fmt(it.p)}</small></td><td class="ra">${fmt(it.q * it.p)}</td></tr>`
+            return `<tr><td>${p.name}</td><td>${it.q}</td><td>${fmt(it.p)}</td><td>${fmt(it.q * it.p)}</td></tr>`
         }).join('')
         const cust = sale.cust ? customerById(sale.cust) : null
-        const payLabel = { cash: 'Cash', momo: 'Mobile Money', credit: 'Credit added to ledger', advance: 'Advance balance' }[sale.pay]
+        const payLabel = { cash: 'CASH', momo: 'MOBILE MONEY', credit: 'CREDIT', advance: 'ADVANCE BALANCE' }[sale.pay]
+        const receiptNumber = 'DEMO-' + new Date(sale.at).getFullYear() + '-' + String(sale.id).replace(/\D/g, '').slice(-4).padStart(4, '0')
+        const txnDate = new Date(sale.at).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+        const subtotal = totalOf(sale.items)
+        const total = saleNet(sale)
+        const paid = Number(sale.paid || 0)
+        const logoUrl = new URL('LOGO/REMOVED.png', window.location.href).href
         paper.innerHTML = `
-            <div class="rp-head"><strong>${state.business}</strong><br>Sonnet POS · Demo receipt<br><small>${new Date(sale.at).toLocaleString('en-GB')} · ${sale.id}</small></div>
-            <table>${lines()}
-                <tr><td>Discount</td><td class="ra">${fmt(sale.disc)}</td></tr>
-                <tr class="rp-tot"><td>Total</td><td class="ra">${fmt(saleNet(sale))}</td></tr>
+            <div class="rp-logo"><img src="${logoUrl}" alt="Demo business logo"></div>
+            <div class="rp-identity">
+                <h3>${state.business}</h3>
+                <p>Veterinary products, vaccines and clinic supplies<br>Demo Junction, Accra<br>024 000 0000<br>demo-vet@example.com</p>
+            </div>
+            <div class="rp-rule"></div>
+            <div class="rp-meta two-col">
+                <p><span>Receipt No.:</span><b>${receiptNumber}</b></p>
+                <p><span>Date &amp; Time:</span><b>${txnDate}</b></p>
+                <p><span>Cashier:</span><b>Demo Operator</b></p>
+                <p><span>Payment Method:</span><b>${payLabel}</b></p>
+            </div>
+            <div class="rp-customer"><span>Customer:</span><b>${cust ? cust.name : 'Walk-in Demo Customer'}</b><small>${cust ? cust.phone : '000 000 0000'}</small></div>
+            <table class="rp-items">
+                <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+                <tbody>${lines()}</tbody>
             </table>
-            <p class="rp-pay">${payLabel}${sale.momoRef ? ' · ' + sale.momoRef : ''}<br>${cust ? 'Customer: ' + cust.name : 'Walk-in customer'}</p>
-            <p class="rp-fine">DEMO RECEIPT — fictional sample data. Printed by the demo; real deployments print 80mm thermal receipts.</p>`
+            <div class="rp-totals">
+                <p><span>Subtotal:</span><b>${fmt(subtotal)}</b></p>
+                ${sale.disc ? `<p><span>Discount:</span><b>${fmt(sale.disc)}</b></p>` : ''}
+                <p class="rp-grand"><span>TOTAL:</span><b>${fmt(total)}</b></p>
+            </div>
+            <div class="rp-pay">
+                <p><span>Total Amount Paid:</span><b>${fmt(paid)}</b></p>
+                <p><span>Paid by ${payLabel === 'CASH' ? 'Cash' : payLabel}:</span><b>${fmt(paid)}</b></p>
+                ${paid < total ? `<p><span>Demo balance:</span><b>${fmt(total - paid)}</b></p>` : ''}
+            </div>
+            <p class="rp-thanks">THANK YOU FOR YOUR PATRONAGE</p>
+            <p class="rp-fine">DEVELOPED BY SONNET SOLUTIONS / 0545489242</p>
+            <p class="rp-demo-note">Demo receipt — fictional sample data only.</p>`
         receipt.querySelector('#r-close').addEventListener('click', () => receipt.remove())
         receipt.querySelector('#r-close-btn').addEventListener('click', () => receipt.remove())
         receipt.querySelector('#r-print').addEventListener('click', () => {
             const w = window.open('', '_blank', 'width=420,height=640')
             if (!w) return
             w.document.write(`<html><head><title>Receipt</title><style>
-                body{font-family:monospace;font-size:13px;max-width:300px;margin:16px auto}
-                table{width:100%;border-collapse:collapse}td{padding:3px 0;vertical-align:top}.ra{text-align:right}
-                .rp-head{margin-bottom:8px}.rp-tot{border-top:1px dashed #000}.rp-fine{margin-top:12px;font-size:11px}
+                @page{size:80mm auto;margin:0}
+                *{box-sizing:border-box}
+                body{margin:0;background:#fff;color:#111;font-family:Arial,sans-serif;font-size:8pt;line-height:1.32}
+                .receipt-paper{width:68mm;max-width:68mm;margin:0 auto;padding:4mm 3.5mm;background:#fff;color:#111;border:0;border-radius:0;font-size:8pt}
+                .rp-logo{text-align:center;margin-bottom:2mm}.rp-logo img{width:19mm;height:auto}.rp-identity{text-align:center}.rp-identity h3{font-size:16pt;line-height:1.08;margin:1mm 0 2mm}.rp-identity p{font-size:8pt;margin:0;color:#4b5563}.rp-rule{border-top:1px dashed #999;margin:5mm 0 4mm}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4mm 5mm}.rp-meta p,.rp-pay p,.rp-totals p{margin:0}.rp-meta span,.rp-customer span{display:block;color:#4b5563}.rp-meta b,.rp-customer b{display:block}.rp-customer{text-align:left;border-top:1px solid #eee;border-bottom:1px solid #eee;margin:5mm 0 4mm;padding:3mm 0 2mm}.rp-customer small{display:block;color:#4b5563}table{width:100%;border-collapse:collapse}.rp-items th{font-size:7.5pt;text-align:left;border-bottom:1px dashed #999;padding-bottom:2mm}.rp-items td{font-size:7.5pt;padding:2.3mm 0;border-bottom:1px solid #eee;vertical-align:top}.rp-items th:nth-child(n+2),.rp-items td:nth-child(n+2),.rp-pay b,.rp-totals b{text-align:right}.rp-totals{border-top:1px dashed #999;border-bottom:1px solid #eee;margin-top:4mm;padding:3mm 0}.rp-totals p,.rp-pay p{display:flex;justify-content:space-between;gap:4mm;margin:0 0 2mm}.rp-grand{font-size:14pt;font-weight:800}.rp-grand b{color:#0284C7}.rp-pay{padding:3mm 0;border-bottom:1px solid #eee}.rp-thanks{text-align:center;margin:5mm 0 2mm;font-size:7.5pt;font-weight:800;letter-spacing:.08em;color:#9ca3af}.rp-fine{text-align:center;margin:0;font-size:7pt;font-style:italic;letter-spacing:.08em;color:#6b7280}.rp-demo-note{text-align:center;margin:2mm 0 0;font-size:6.5pt;color:#999}
             </style></head><body>${paper.innerHTML}</body></html>`)
             w.document.close()
             setTimeout(() => w.print(), 300)
@@ -388,6 +431,9 @@
         cart = []
         els.cartDisc.value = '0'
         els.checkMomo.value = ''
+        els.amountPaid.value = ''
+        els.receiptReady.hidden = true
+        lastSale = null
         renderAll()
     })
 

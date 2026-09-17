@@ -151,6 +151,10 @@
                                         <input id="amount-paid" type="number" min="0" placeholder="0.00">
                                     </div>
                                     <button class="btn btn-primary btn-block" id="complete-sale" type="button">Complete sale</button>
+                                    <div class="receipt-ready" id="receipt-ready" hidden>
+                                        <span>Demo sale completed.</span>
+                                        <button class="btn btn-ghost btn-small" id="view-receipt" type="button">View Receipt</button>
+                                    </div>
                                     <p class="hint" id="checkout-hint"></p>
                                 </div>
                             </div>
@@ -223,13 +227,13 @@
         <div class="receipt" role="dialog" aria-modal="true" aria-labelledby="r-title">
             <div class="receipt-pane">
                 <div class="receipt-head">
-                    <h2 id="r-title">Sale completed</h2>
+                    <h2 id="r-title">Receipt preview</h2>
                     <button type="button" class="modal-close" id="r-close" aria-label="Close receipt">×</button>
                 </div>
                 <div class="receipt-paper" id="receipt-paper"></div>
                 <div class="receipt-actions">
                     <button class="btn btn-ghost" id="r-close-btn" type="button">Continue</button>
-                    <button class="btn btn-primary" id="r-print" type="button">Print receipt</button>
+                    <button class="btn btn-primary" id="r-print" type="button">Print preview</button>
                 </div>
             </div>
         </div>
