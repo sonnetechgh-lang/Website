@@ -5,17 +5,33 @@ const customerVideos = []
 
 const toggle = document.querySelector('.menu-toggle')
 const navigation = document.getElementById('navigation')
+const demoFrame = document.querySelector('.product-preview iframe[data-src]')
 function closeMenu() {
+    if (!navigation || !toggle) return
     navigation.classList.remove('open')
     toggle.setAttribute('aria-expanded', 'false')
 }
-toggle.addEventListener('click', () => {
-    const open = navigation.classList.toggle('open')
-    toggle.setAttribute('aria-expanded', String(open))
-})
-navigation.addEventListener('click', (event) => { if (event.target.closest('a')) closeMenu() })
-document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeMenu(); toggle.focus() } })
+if (toggle && navigation) {
+    toggle.addEventListener('click', () => {
+        const open = navigation.classList.toggle('open')
+        toggle.setAttribute('aria-expanded', String(open))
+    })
+    navigation.addEventListener('click', (event) => { if (event.target.closest('a')) closeMenu() })
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeMenu(); toggle.focus() } })
+}
 document.getElementById('year').textContent = new Date().getFullYear()
+
+function loadDemoFrame() {
+    if (!demoFrame || demoFrame.getAttribute('src')) return
+    demoFrame.removeAttribute('srcdoc')
+    demoFrame.setAttribute('src', demoFrame.getAttribute('data-src'))
+}
+if (demoFrame) {
+    window.addEventListener('load', () => {
+        if ('requestIdleCallback' in window) requestIdleCallback(loadDemoFrame, { timeout: 1800 })
+        else setTimeout(loadDemoFrame, 800)
+    }, { once: true })
+}
 
 customerVideos.slice(0, 3).forEach((story, index) => {
     if (!story.src || !story.name || !story.captions) return
