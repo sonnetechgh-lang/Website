@@ -1,6 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/pos-system", "destination": "/#system", "permanent": true },
+    { "source": "/solutions", "destination": "/#system", "permanent": true },
+    { "source": "/industries", "destination": "/#system", "permanent": true },
+    { "source": "/about", "destination": "/#contact", "permanent": true },
+    { "source": "/client-stories", "destination": "/#stories", "permanent": true },
+    { "source": "/contact", "destination": "/#contact", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/demo",

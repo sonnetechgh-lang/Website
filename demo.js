@@ -8,7 +8,7 @@
     const CURR = 'GH₵'
 
     const seed = {
-        business: 'Demo Veterinary Consult',
+        business: 'Demo Shop',
         products: [
             { id: 'P01', name: 'Canine Multi Tabs', brand: 'DemoVet Supplies', cat: 'Supplements', batch: 'DVT-042', expiry: '30 Nov 2028', pkg: [{ u: 'bottle', price: 70 }], stock: 15, low: 8 },
             { id: 'P02', name: 'Poultry Immune Boost', brand: 'Sample Animal Care', cat: 'Drugs', batch: 'N/A', expiry: 'N/A', pkg: [{ u: 'pack', price: 400 }], stock: 6, low: 8 },
@@ -44,6 +44,7 @@
     }
 
     const state = load()
+    state.business = seed.business
 
     function load() {
         try {
