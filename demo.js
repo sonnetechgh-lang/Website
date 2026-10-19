@@ -4,30 +4,30 @@
 (() => {
     'use strict'
 
-    const STORAGE_KEY = 'sonnet-pos-demo-v2'
+    const STORAGE_KEY = 'sonnet-pos-demo-v3'
     const CURR = 'GH₵'
 
     const seed = {
-        business: 'Demo Shop',
+        business: 'Demo Retail Store',
         products: [
-            { id: 'P01', name: 'Canine Multi Tabs', brand: 'DemoVet Supplies', cat: 'Supplements', batch: 'DVT-042', expiry: '30 Nov 2028', pkg: [{ u: 'bottle', price: 70 }], stock: 15, low: 8 },
-            { id: 'P02', name: 'Poultry Immune Boost', brand: 'Sample Animal Care', cat: 'Drugs', batch: 'N/A', expiry: 'N/A', pkg: [{ u: 'pack', price: 400 }], stock: 6, low: 8 },
-            { id: 'P03', name: 'Livestock Sterile Wash', brand: 'DemoVet Supplies', cat: 'Tools', batch: 'DVT-018', expiry: '31 Mar 2028', pkg: [{ u: 'bottle', price: 150 }], stock: 0, low: 5 },
-            { id: 'P04', name: 'Dewormer Plus 1L', brand: 'Fictional Farms', cat: 'Drugs', batch: 'DWM-114', expiry: '30 Sep 2029', pkg: [{ u: 'bottle', price: 60 }], stock: 4, low: 8 },
-            { id: 'P05', name: 'Calcium Feed Mix', brand: 'DemoVet Supplies', cat: 'Supplements', batch: 'N/A', expiry: 'N/A', pkg: [{ u: 'bag', price: 320 }], stock: 72, low: 12 },
-            { id: 'P06', name: 'Broiler Starter 25kg', brand: 'Sample Feed Co.', cat: 'Feeds', batch: 'FED-221', expiry: '18 Nov 2026', pkg: [{ u: 'bag', price: 120 }], stock: 103, low: 20 },
-            { id: 'P07', name: 'Clinic Disinfectant Spray', brand: 'Sanivet Demo', cat: 'Tools', batch: 'TLS-030', expiry: '31 Mar 2028', pkg: [{ u: 'bottle', price: 80 }], stock: 18, low: 10 },
-            { id: 'P08', name: 'Electrolyte Powder', brand: 'Sample Animal Care', cat: 'Drugs', batch: 'ELT-009', expiry: '30 Jun 2028', pkg: [{ u: 'sachet', price: 230 }], stock: 0, low: 8 },
-            { id: 'P09', name: 'Tick & Flea Pour-On', brand: 'DemoVet Supplies', cat: 'Drugs', batch: 'TCK-202', expiry: '30 Nov 2028', pkg: [{ u: 'bottle', price: 200 }], stock: 11, low: 8 },
-            { id: 'P10', name: 'Small Animal Vaccine', brand: 'Fictional Biologics', cat: 'Vaccines', batch: 'VAC-620', expiry: '28 Feb 2027', pkg: [{ u: 'vial', price: 220 }], stock: 10, low: 6 },
-            { id: 'P11', name: 'Wound Care Solution', brand: 'Sanivet Demo', cat: 'Drugs', batch: 'WND-075', expiry: '12 Jan 2029', pkg: [{ u: 'bottle', price: 40 }], stock: 39, low: 12 },
-            { id: 'P12', name: 'Poultry Vitamin 1kg', brand: 'Sample Feed Co.', cat: 'Supplements', batch: 'VIT-300', expiry: '05 May 2028', pkg: [{ u: 'pack', price: 420 }], stock: 17, low: 10 }
+            { id: 'P01', name: 'Long Grain Rice 5kg', brand: 'Sample Foods', cat: 'Groceries', batch: 'RCE-042', expiry: '30 Nov 2027', pkg: [{ u: 'bag', price: 165 }], stock: 24, low: 10 },
+            { id: 'P02', name: 'Vegetable Cooking Oil 3L', brand: 'Demo Pantry', cat: 'Groceries', batch: 'OIL-118', expiry: '31 Mar 2027', pkg: [{ u: 'bottle', price: 210 }], stock: 6, low: 8 },
+            { id: 'P03', name: 'Tomato Paste Carton', brand: 'Sample Foods', cat: 'Groceries', batch: 'TMP-207', expiry: '30 Sep 2027', pkg: [{ u: 'carton', price: 380 }], stock: 0, low: 4 },
+            { id: 'P04', name: 'Granulated Sugar 1kg', brand: 'Demo Pantry', cat: 'Groceries', batch: 'SGR-031', expiry: '31 Jan 2028', pkg: [{ u: 'pack', price: 28 }], stock: 4, low: 10 },
+            { id: 'P05', name: 'Bottled Water 12-Pack', brand: 'Fictional Springs', cat: 'Drinks', batch: 'WTR-550', expiry: '18 Nov 2027', pkg: [{ u: 'pack', price: 45 }], stock: 72, low: 15 },
+            { id: 'P06', name: 'Malt Drink 6-Pack', brand: 'Sample Beverages', cat: 'Drinks', batch: 'MLT-221', expiry: '28 Feb 2027', pkg: [{ u: 'pack', price: 60 }], stock: 40, low: 12 },
+            { id: 'P07', name: 'Laundry Detergent 2kg', brand: 'Demo Home Care', cat: 'Household', batch: 'DTG-030', expiry: 'N/A', pkg: [{ u: 'bag', price: 95 }], stock: 18, low: 8 },
+            { id: 'P08', name: 'Dishwashing Liquid 1L', brand: 'Demo Home Care', cat: 'Household', batch: 'DSH-009', expiry: 'N/A', pkg: [{ u: 'bottle', price: 35 }], stock: 0, low: 8 },
+            { id: 'P09', name: 'Bath Soap 3-Pack', brand: 'Sample Essentials', cat: 'Personal Care', batch: 'SOP-202', expiry: '30 Nov 2028', pkg: [{ u: 'pack', price: 30 }], stock: 26, low: 10 },
+            { id: 'P10', name: 'Body Lotion 400ml', brand: 'Sample Essentials', cat: 'Personal Care', batch: 'LTN-620', expiry: '12 Jan 2028', pkg: [{ u: 'bottle', price: 75 }], stock: 5, low: 6 },
+            { id: 'P11', name: 'USB Phone Charger', brand: 'Demo Tech', cat: 'Electronics', batch: 'N/A', expiry: 'N/A', pkg: [{ u: 'piece', price: 85 }], stock: 39, low: 10 },
+            { id: 'P12', name: 'AA Batteries 4-Pack', brand: 'Demo Tech', cat: 'Electronics', batch: 'BAT-300', expiry: '05 May 2030', pkg: [{ u: 'pack', price: 40 }], stock: 17, low: 10 }
         ],
         customers: [
-            { id: 'C1', name: 'Walk-in Pet Owner', phone: '000 000 0000', credit: 0, advance: 45 },
-            { id: 'C2', name: 'Sample Poultry Farm', phone: '000 000 0000', credit: 132, advance: 0 },
-            { id: 'C3', name: 'Demo Livestock Buyer', phone: '000 000 0000', credit: 0, advance: 0 },
-            { id: 'C4', name: 'Fictional Kennel Account', phone: '000 000 0000', credit: 58, advance: 0 }
+            { id: 'C1', name: 'Regular Walk-in Customer', phone: '000 000 0000', credit: 0, advance: 120 },
+            { id: 'C2', name: 'Sample Mini Mart', phone: '000 000 0000', credit: 132, advance: 0 },
+            { id: 'C3', name: 'Demo Office Account', phone: '000 000 0000', credit: 0, advance: 0 },
+            { id: 'C4', name: 'Fictional Catering Co.', phone: '000 000 0000', credit: 58, advance: 0 }
         ],
         sales: seedSales()
     }
@@ -35,11 +35,11 @@
     function seedSales() {
         const t = Date.now()
         return [
-            { id: 'S010', at: t - 2 * 3600e3, items: [{ pid: 'P01', u: 'bottle', q: 3, p: 70 }], disc: 0, pay: 'cash', cust: null },
-            { id: 'S011', at: t - 4 * 3600e3, items: [{ pid: 'P06', u: 'bag', q: 2, p: 120 }], disc: 0, pay: 'momo', cust: 'C3' },
-            { id: 'S012', at: t - 6 * 3600e3, items: [{ pid: 'P09', u: 'bottle', q: 1, p: 200 }, { pid: 'P11', u: 'bottle', q: 2, p: 40 }], disc: 10, pay: 'credit', cust: 'C2' },
-            { id: 'S013', at: t - 26 * 3600e3, items: [{ pid: 'P12', u: 'pack', q: 1, p: 420 }], disc: 0, pay: 'cash', cust: null },
-            { id: 'S014', at: t - 27 * 3600e3, items: [{ pid: 'P04', u: 'bottle', q: 1, p: 60 }], disc: 0, pay: 'advance', cust: 'C1' }
+            { id: 'S010', at: t - 2 * 3600e3, items: [{ pid: 'P01', u: 'bag', q: 1, p: 165 }], disc: 0, pay: 'cash', cust: null },
+            { id: 'S011', at: t - 4 * 3600e3, items: [{ pid: 'P05', u: 'pack', q: 2, p: 45 }], disc: 0, pay: 'momo', cust: 'C3' },
+            { id: 'S012', at: t - 6 * 3600e3, items: [{ pid: 'P07', u: 'bag', q: 1, p: 95 }, { pid: 'P09', u: 'pack', q: 2, p: 30 }], disc: 5, pay: 'credit', cust: 'C2' },
+            { id: 'S013', at: t - 26 * 3600e3, items: [{ pid: 'P06', u: 'pack', q: 1, p: 60 }], disc: 0, pay: 'cash', cust: null },
+            { id: 'S014', at: t - 27 * 3600e3, items: [{ pid: 'P11', u: 'piece', q: 1, p: 85 }], disc: 0, pay: 'advance', cust: 'C1' }
         ]
     }
 
@@ -104,14 +104,26 @@
     let lastSale = null
 
     /* ---------- navigation ---------- */
-    document.querySelectorAll('.demo-nav-item').forEach((btn) => {
+    const navItems = document.querySelectorAll('.demo-nav-item')
+    function showView(view) {
+        navItems.forEach((b) => b.classList.toggle('active', b.dataset.view === view))
+        document.querySelectorAll('.demo-view').forEach((v) => v.classList.toggle('active', v.id === 'view-' + view))
+    }
+    navItems.forEach((btn) => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.demo-nav-item').forEach((b) => b.classList.toggle('active', b === btn))
-            document.querySelectorAll('.demo-view').forEach((v) => v.classList.toggle('active', v.id === 'view-' + btn.dataset.view))
+            showView(btn.dataset.view)
+            history.replaceState(null, '', '#' + btn.dataset.view)
             closeDrawer()
             window.scrollTo({ top: 0 })
         })
     })
+    // Deep links such as demo.html#products open that view directly.
+    function showLinkedView() {
+        const linked = location.hash.slice(1)
+        if ([...navItems].some((b) => b.dataset.view === linked)) showView(linked)
+    }
+    showLinkedView()
+    window.addEventListener('hashchange', showLinkedView)
 
     const drawerToggle = document.getElementById('demo-drawer-toggle')
     const drawer = document.getElementById('demo-sidebar')
@@ -172,7 +184,7 @@
 
     /* ---------- POS ---------- */
     function renderChips() {
-        const cats = ['all', 'Drugs', 'Vaccines', 'Feeds', 'Tools', 'Supplements']
+        const cats = ['all', ...new Set(state.products.map((p) => p.cat))]
         els.catChips.innerHTML = cats.map((c) => `<button type="button" class="chip${c === activeCat ? ' active' : ''}" data-cat="${c}">${c === 'all' ? 'All' : c}</button>`).join('')
         els.catChips.querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => { activeCat = b.dataset.cat; renderChips(); renderProducts() }))
     }
@@ -318,12 +330,12 @@
         const subtotal = totalOf(sale.items)
         const total = saleNet(sale)
         const paid = Number(sale.paid || 0)
-        const logoUrl = new URL('LOGO/REMOVED.png', window.location.href).href
+        const logoUrl = new URL('LOGO/sonnet-mark.png', window.location.href).href
         paper.innerHTML = `
-            <div class="rp-logo"><img src="${logoUrl}" alt="Demo business logo"></div>
+            <div class="rp-logo"><img src="${logoUrl}" alt="Sonnet Solutions logo"></div>
             <div class="rp-identity">
                 <h3>${state.business}</h3>
-                <p>Veterinary products, vaccines and clinic supplies<br>Demo Junction, Accra<br>024 000 0000<br>demo-vet@example.com</p>
+                <p>Groceries, household and everyday goods<br>Demo Street, Accra<br>024 000 0000<br>store@example.com</p>
             </div>
             <div class="rp-rule"></div>
             <div class="rp-meta two-col">
