@@ -6,7 +6,7 @@
     { "source": "/solutions", "destination": "/#system", "permanent": true },
     { "source": "/industries", "destination": "/#system", "permanent": true },
     { "source": "/about", "destination": "/#contact", "permanent": true },
-    { "source": "/client-stories", "destination": "/#stories", "permanent": true },
+    { "source": "/client-stories", "destination": "/", "permanent": true },
     { "source": "/contact", "destination": "/#contact", "permanent": true }
   ],
   "headers": [

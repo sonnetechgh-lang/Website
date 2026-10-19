@@ -1,11 +1,5 @@
-/* Add exactly three approved customer videos here when supplied.
-   Each entry: { name, business, src, captions, poster }.
-   Use consented public media only; captions must be a WebVTT file. */
-const customerVideos = []
-
 const toggle = document.querySelector('.menu-toggle')
 const navigation = document.getElementById('navigation')
-const demoFrame = document.querySelector('.product-preview iframe[data-src]')
 function closeMenu() {
     if (!navigation || !toggle) return
     navigation.classList.remove('open')
@@ -21,8 +15,12 @@ if (toggle && navigation) {
 }
 document.getElementById('year').textContent = new Date().getFullYear()
 
+/* Live demo in the hero: wide screens only. Phones get a static capture,
+   so the embedded app never traps page scrolling. */
+const demoFrame = document.querySelector('.product-preview iframe[data-src]')
+const wide = window.matchMedia('(min-width: 701px)')
 function loadDemoFrame() {
-    if (!demoFrame || demoFrame.getAttribute('src')) return
+    if (!demoFrame || demoFrame.getAttribute('src') || !wide.matches) return
     demoFrame.removeAttribute('srcdoc')
     demoFrame.setAttribute('src', demoFrame.getAttribute('data-src'))
 }
@@ -31,29 +29,52 @@ if (demoFrame) {
         if ('requestIdleCallback' in window) requestIdleCallback(loadDemoFrame, { timeout: 1800 })
         else setTimeout(loadDemoFrame, 800)
     }, { once: true })
+    wide.addEventListener('change', loadDemoFrame)
 }
 
-customerVideos.slice(0, 3).forEach((story, index) => {
-    if (!story.src || !story.name || !story.captions) return
-    const article = document.createElement('article')
-    article.className = 'customer-video'
-    const video = document.createElement('video')
-    video.controls = true
-    video.preload = 'none'
-    video.playsInline = true
-    video.src = story.src
-    video.setAttribute('aria-label', `${story.name} — customer story`)
-    if (story.poster) video.poster = story.poster
-    const captions = document.createElement('track')
-    captions.kind = 'captions'
-    captions.src = story.captions
-    captions.srclang = 'en'
-    captions.label = 'English'
-    video.append(captions)
-    const heading = document.createElement('h3')
-    heading.textContent = story.name
-    const business = document.createElement('p')
-    business.textContent = story.business || ''
-    article.append(video, heading, business)
-    document.getElementById('customer-videos').children[index].replaceWith(article)
-})
+/* Sale walkthrough: steps through real captures of the demo. */
+const steps = [...document.querySelectorAll('#sale-steps button')]
+const frames = [...document.querySelectorAll('.stage img')]
+const bar = document.querySelector('.stage-progress span')
+const playToggle = document.getElementById('sale-toggle')
+const STEP_MS = 3200
+if (steps.length && frames.length === steps.length) {
+    let current = 0
+    let timer = null
+    let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let visible = false
+    document.querySelector('.stage').style.setProperty('--step-ms', STEP_MS + 'ms')
+
+    function show(index) {
+        current = (index + frames.length) % frames.length
+        frames.forEach((img, i) => {
+            img.classList.toggle('active', i === current)
+            img.setAttribute('aria-hidden', String(i !== current))
+        })
+        steps.forEach((btn, i) => {
+            if (i === current) btn.setAttribute('aria-current', 'step')
+            else btn.removeAttribute('aria-current')
+        })
+        schedule()
+    }
+    function schedule() {
+        clearTimeout(timer)
+        bar.classList.remove('run')
+        if (!playing || !visible) return
+        void bar.offsetWidth // restart the progress animation
+        bar.classList.add('run')
+        timer = setTimeout(() => show(current + 1), STEP_MS)
+    }
+    function setPlaying(value) {
+        playing = value
+        playToggle.textContent = playing ? 'Pause' : 'Play'
+        playToggle.setAttribute('aria-pressed', String(!playing))
+        schedule()
+    }
+    steps.forEach((btn, i) => btn.addEventListener('click', () => { playing = false; setPlaying(false); show(i) }))
+    playToggle.addEventListener('click', () => setPlaying(!playing))
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; schedule() }, { threshold: 0.4 })
+        .observe(document.querySelector('.walkthrough'))
+    setPlaying(playing)
+    show(0)
+}
