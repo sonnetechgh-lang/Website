@@ -78,3 +78,97 @@ if (steps.length && frames.length === steps.length) {
     setPlaying(playing)
     show(0)
 }
+
+/* Walkthrough booking form: sends through FormSubmit to info@sonnetghana.com.
+   Without JavaScript the form still posts normally and returns to ?booked=1. */
+const bookingForm = document.getElementById('booking-form')
+if (bookingForm) {
+    const status = document.getElementById('booking-status')
+    const submit = bookingForm.querySelector('button[type="submit"]')
+    const fallback = 'Please call <a href="tel:+233545489242">+233 54 548 9242</a> or <a href="https://wa.me/233257940113">message us on WhatsApp</a>.'
+    const setStatus = (kind, html) => { status.className = 'form-status ' + kind; status.innerHTML = html }
+
+    const dialog = document.getElementById('booking-dialog')
+    function openBooking() {
+        closeMenu()
+        if (!dialog.open) dialog.showModal()
+        bookingForm.elements.name.focus()
+    }
+    // The header button opens the form; without JavaScript it falls back to email.
+    document.querySelectorAll('[data-open-booking]').forEach((link) => link.addEventListener('click', (event) => {
+        if (typeof dialog.showModal !== 'function') return
+        event.preventDefault()
+        openBooking()
+    }))
+    dialog.querySelectorAll('[data-close-booking]').forEach((btn) => btn.addEventListener('click', () => dialog.close()))
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close() }) // backdrop
+
+    if (new URLSearchParams(location.search).get('booked') === '1') {
+        setStatus('ok', 'Thank you. We’ve received your request and will call you shortly to arrange your walkthrough.')
+        if (typeof dialog.showModal === 'function') dialog.showModal()
+    }
+
+    const checks = {
+        name: (v) => v.trim().length >= 2 || 'Please enter your name.',
+        phone: (v) => v.replace(/\D/g, '').length >= 9 || 'Please enter a phone number we can call.',
+        email: (v) => !v.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) || 'Please check the email address, or leave it blank.'
+    }
+    function validate(input) {
+        const check = checks[input.name]
+        if (!check) return true
+        const result = check(input.value)
+        const id = input.id + '-error'
+        let error = document.getElementById(id)
+        if (result === true) {
+            input.removeAttribute('aria-invalid')
+            input.removeAttribute('aria-describedby')
+            if (error) error.remove()
+            return true
+        }
+        if (!error) {
+            error = document.createElement('p')
+            error.className = 'field-error'
+            error.id = id
+            input.after(error)
+        }
+        error.textContent = result
+        input.setAttribute('aria-invalid', 'true')
+        input.setAttribute('aria-describedby', id)
+        return false
+    }
+    bookingForm.querySelectorAll('input[name="name"], input[name="phone"], input[name="email"]').forEach((input) => {
+        input.addEventListener('blur', () => { if (input.value) validate(input) })
+        input.addEventListener('input', () => { if (input.getAttribute('aria-invalid')) validate(input) })
+    })
+
+    bookingForm.addEventListener('submit', async (event) => {
+        event.preventDefault()
+        const fields = ['name', 'phone', 'email'].map((n) => bookingForm.elements[n])
+        const invalid = fields.filter((input) => !validate(input))
+        if (invalid.length) { invalid[0].focus(); return }
+
+        const data = Object.fromEntries(new FormData(bookingForm))
+        if (data._honey) return // filled in by a bot
+        delete data._next
+        if (data.email) data._replyto = data.email
+        submit.disabled = true
+        submit.textContent = 'Sending…'
+        setStatus('', '')
+        try {
+            const response = await fetch(bookingForm.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify(data)
+            })
+            const result = await response.json().catch(() => ({}))
+            if (!response.ok || String(result.success) !== 'true') throw new Error(result.message || 'Send failed')
+            bookingForm.reset()
+            setStatus('ok', 'Thank you. We’ve received your request and will call you shortly to arrange your walkthrough.')
+        } catch (err) {
+            setStatus('error', 'Sorry, your request didn’t send. ' + fallback)
+        } finally {
+            submit.disabled = false
+            submit.textContent = 'Book a walkthrough'
+        }
+    })
+}

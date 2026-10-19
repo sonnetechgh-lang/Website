@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="home.css">
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"LocalBusiness","name":"Sonnet Solutions Ghana Limited","url":"https://www.sonnetghana.com/","email":"info@sonnetghana.com","telephone":"+233545489242","address":{"@type":"PostalAddress","addressLocality":"Labadi","addressRegion":"Accra","addressCountry":"GH"}}
+    {"@context":"https://schema.org","@type":"LocalBusiness","name":"Sonnet Solutions Ghana Limited","url":"https://www.sonnetghana.com/","email":"info@sonnetghana.com","telephone":"+233545489242","address":{"@type":"PostalAddress","addressLocality":"Amasaman","addressRegion":"Accra","addressCountry":"GH"}}
     </script>
 </head>
 <body>
@@ -34,7 +34,7 @@
             <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu</button>
             <nav id="navigation" aria-label="Primary">
                 <a href="#system">Features</a><a href="#walkthrough">How a sale works</a><a href="#contact">Contact</a>
-                <a class="button button-primary small" href="#contact">Book a walkthrough</a>
+                <a class="button button-primary small" href="mailto:info@sonnetghana.com?subject=Walkthrough%20booking" data-open-booking aria-haspopup="dialog">Book a walkthrough</a>
             </nav>
         </div>
     </header>
@@ -43,7 +43,7 @@
             <p class="eyebrow">Built for businesses in Ghana</p>
             <h1>POS and management systems.<br><span>Less admin. More clarity.</span></h1>
             <p class="intro">Manage sales, stock and reports in one system built around how your business works.</p>
-            <div class="actions"><a class="button button-primary" href="demo.html">Try the POS Demo <span aria-hidden="true">↗</span></a><a class="button button-secondary" href="#contact">Book a walkthrough</a></div>
+            <div class="actions"><a class="button button-primary" href="demo.html">Try the POS Demo <span aria-hidden="true">↗</span></a><a class="button button-secondary" href="https://wa.me/233257940113?text=Hello%20Sonnet%2C%20I%27d%20like%20to%20book%20a%20walkthrough%20of%20the%20POS%20system." target="_blank" rel="noopener">Book a walkthrough</a></div>
             <div class="product-preview">
                 <div class="preview-label"><span>Sonnet POS · live interactive demo</span><a href="demo.html">Open full screen ↗</a></div>
                 <iframe data-src="demo.html" loading="lazy" title="Sonnet POS interactive dashboard with fictional sample data" srcdoc="<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><style>body{margin:0;display:grid;place-items:center;min-height:100vh;background:#F9FAFB;color:#4B5563;font:14px system-ui,-apple-system,Segoe UI,sans-serif}.box{padding:24px;text-align:center}.title{display:block;margin-bottom:6px;color:#111827;font-weight:700}</style></head><body><div class='box'><span class='title'>Sonnet POS Demo</span><span>Loading the live interactive demo...</span></div></body></html>"></iframe>
@@ -130,17 +130,56 @@
                 <div class="contact-copy">
                     <h2>A system that fits your business.</h2>
                     <p>Tell us what you sell and what you need to manage. We’ll walk you through the system and help you find the right setup.</p>
-                    <a class="button button-primary" href="https://wa.me/233257940113?text=Hello%20Sonnet%2C%20I%27d%20like%20to%20book%20a%20walkthrough%20of%20the%20POS%20system.">Book a walkthrough on WhatsApp</a>
+                    <a class="button button-primary" href="https://wa.me/233257940113?text=Hello%20Sonnet%2C%20I%27d%20like%20to%20book%20a%20walkthrough%20of%20the%20POS%20system." target="_blank" rel="noopener">Book a walkthrough on WhatsApp</a>
                 </div>
-                <address class="contact-card">
+                <address class="contact-details">
                     <div><span>Email</span><a href="mailto:info@sonnetghana.com">info@sonnetghana.com</a></div>
                     <div><span>Telephone</span><a href="tel:+233545489242">+233&nbsp;54&nbsp;548&nbsp;9242</a></div>
-                    <div><span>WhatsApp</span><a href="https://wa.me/233257940113">+233&nbsp;25&nbsp;794&nbsp;0113</a></div>
-                    <div><span>Visit us</span>Labadi, Accra, Ghana</div>
+                    <div><span>WhatsApp</span><a href="https://wa.me/233257940113" target="_blank" rel="noopener">+233&nbsp;25&nbsp;794&nbsp;0113</a></div>
+                    <div><span>Visit us</span>Amasaman, Accra, Ghana</div>
                 </address>
             </div>
         </section>
     </main>
+    <dialog class="booking-dialog" id="booking-dialog" aria-labelledby="booking-title">
+        <div class="dialog-head">
+            <div>
+                <h2 id="booking-title">Book a walkthrough</h2>
+                <p>Leave your details and we’ll call you to arrange a time.</p>
+            </div>
+            <button type="button" class="dialog-close" data-close-booking aria-label="Close">×</button>
+        </div>
+            <!-- FormSubmit emails each booking to info@sonnetghana.com. The first
+                 submission sends a one-time activation email to that inbox. -->
+            <form class="booking-form" id="booking-form" action="https://formsubmit.co/info@sonnetghana.com" method="POST" novalidate>
+                <input type="hidden" name="_subject" value="New walkthrough booking — sonnetghana.com">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" value="https://www.sonnetghana.com/?booked=1">
+                <div class="honeypot" aria-hidden="true"><label>Leave this empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
+                <div class="form-row">
+                    <label for="bf-name">Your name</label>
+                    <input id="bf-name" name="name" type="text" autocomplete="name" required maxlength="80">
+                </div>
+                <div class="form-row">
+                    <label for="bf-phone">Phone or WhatsApp number</label>
+                    <input id="bf-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20" placeholder="e.g. 024 123 4567">
+                </div>
+                <div class="form-row">
+                    <label for="bf-email">Email <span class="optional">(optional)</span></label>
+                    <input id="bf-email" name="email" type="email" autocomplete="email" maxlength="120">
+                </div>
+                <div class="form-row">
+                    <label for="bf-business">Business name and type <span class="optional">(optional)</span></label>
+                    <input id="bf-business" name="business" type="text" autocomplete="organization" maxlength="120" placeholder="e.g. Mini mart in Amasaman">
+                </div>
+                <div class="form-row">
+                    <label for="bf-message">What do you need to manage? <span class="optional">(optional)</span></label>
+                    <textarea id="bf-message" name="message" rows="4" maxlength="1500" placeholder="Sales, stock, credit customers, several branches…"></textarea>
+                </div>
+                <button class="button button-primary" type="submit">Book a walkthrough</button>
+                <p class="form-status" id="booking-status" role="status" aria-live="polite"></p>
+            </form>
+    </dialog>
     <footer class="footer">
         <div class="container footer-inner">
             <a class="brand" href="index.html" aria-label="Sonnet Solutions — home"><img class="brand-mark" src="LOGO/sonnet-mark.png" width="207" height="146" alt="" loading="lazy"><span class="brand-name">Sonnet Solutions</span></a>

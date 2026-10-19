@@ -142,12 +142,42 @@ main { overflow-x: clip; }
 .contact-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
 .contact-copy h2 { max-width: 14ch; }
 .contact-copy p { margin: 18px 0 28px; font-size: 18px; max-width: 46ch; }
-.contact-card { font-style: normal; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); padding: 8px 28px; }
-.contact-card div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 16px; color: var(--text); font-weight: 600; text-align: right; }
-.contact-card div:last-child { border-bottom: 0; }
-.contact-card span { font-size: 14px; font-weight: 500; color: var(--muted); text-align: left; }
-.contact-card a { overflow-wrap: anywhere; color: var(--primary-dark); }
-.contact-card a:hover { text-decoration: underline; }
+.contact-details { font-style: normal; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); padding: 8px 28px; }
+.contact-details div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 16px; color: var(--text); font-weight: 600; text-align: right; }
+.contact-details div:last-child { border-bottom: 0; }
+.contact-details span { font-size: 14px; font-weight: 500; color: var(--muted); text-align: left; }
+.contact-details a { overflow-wrap: anywhere; color: var(--primary-dark); }
+.contact-details a:hover { text-decoration: underline; }
+
+/* Booking dialog (opened from the header button) */
+.booking-dialog { width: min(520px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--text); box-shadow: var(--shadow-lg); overflow: auto; }
+.booking-dialog::backdrop { background: rgba(15, 23, 42, 0.45); }
+.dialog-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 24px 28px 0; }
+.dialog-head h2 { font-size: 24px; letter-spacing: -0.02em; }
+.dialog-head p { margin: 6px 0 0; font-size: 15px; }
+.dialog-close { flex-shrink: 0; width: 44px; height: 44px; margin: -8px -12px 0 0; border: 0; border-radius: var(--radius); background: transparent; color: var(--muted); font-size: 26px; line-height: 1; cursor: pointer; }
+.dialog-close:hover { background: #F3F4F6; color: var(--text); }
+.booking-dialog .booking-form { padding: 20px 28px 28px; }
+
+/* Booking form: same controls as the demo (8px radius, grey border, blue focus). */
+.booking-form { display: grid; gap: 18px; }
+.form-row { display: grid; gap: 6px; }
+.form-row label { font-size: 15px; font-weight: 600; color: var(--text); }
+.optional { font-weight: 400; color: var(--muted); }
+.form-row input, .form-row textarea { width: 100%; min-height: 48px; padding: 11px 14px; border: 1px solid #D1D5DB; border-radius: var(--radius); background: #fff; color: var(--text); font: inherit; font-size: 16px; }
+.form-row textarea { min-height: 112px; resize: vertical; }
+.form-row input::placeholder, .form-row textarea::placeholder { color: #9CA3AF; }
+.form-row input:focus, .form-row textarea:focus { outline: 0; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18); }
+.form-row input[aria-invalid="true"] { border-color: #DC2626; }
+.field-error { margin: 0; font-size: 14px; color: #B91C1C; }
+.booking-form .button { width: 100%; }
+.booking-form .button[disabled] { opacity: .7; cursor: wait; }
+.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-status { margin: 0; font-size: 15px; }
+.form-status:empty { display: none; }
+.form-status.ok { padding: 12px 14px; border-radius: var(--radius); background: #ECFDF5; border: 1px solid #BBF7D0; color: #166534; font-weight: 600; }
+.form-status.error { padding: 12px 14px; border-radius: var(--radius); background: #FEF2F2; border: 1px solid #FECACA; color: #991B1B; }
+.form-status a { text-decoration: underline; }
 
 /* Footer */
 .footer { border-top: 1px solid var(--line); }
@@ -200,8 +230,10 @@ main { overflow-x: clip; }
     .section, .walkthrough, .contact-section { padding-block: 64px; }
     .section-heading { margin-bottom: 36px; }
     .custom-note { margin-top: 64px; }
-    .contact-card { padding: 4px 20px; }
-    .contact-card div { flex-direction: column; gap: 4px; text-align: left; }
+    .contact-details { padding: 4px 20px; }
+    .contact-details div { flex-direction: column; gap: 4px; text-align: left; }
+    .dialog-head { padding: 20px 20px 0; }
+    .booking-dialog .booking-form { padding: 16px 20px 20px; }
     .footer-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
