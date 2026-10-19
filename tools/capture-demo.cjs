@@ -31,6 +31,8 @@ async function main() {
     const base = `http://localhost:${server.address().port}/demo.html`
     const browser = await puppeteer.launch({ executablePath: CHROME, headless: true })
     const page = await browser.newPage()
+    // Stills must show the settled interface, not an animation mid-way.
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])
 
     async function open(view, viewport) {
         await page.setViewport(viewport)

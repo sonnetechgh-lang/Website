@@ -268,6 +268,20 @@ button { font-family: inherit; }
 .kpi-orange { background: linear-gradient(135deg, #FB923C, #F97316); }
 .kpi-cyan { background: linear-gradient(135deg, #0891B2, #0369A1); }
 
+/* KPI cards appear one after another whenever the dashboard opens. */
+@keyframes kpiIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+#view-dashboard.active .kpi { animation: kpiIn 520ms cubic-bezier(.2, .7, .2, 1) both; }
+#view-dashboard.active .kpi:nth-child(2) { animation-delay: 70ms; }
+#view-dashboard.active .kpi:nth-child(3) { animation-delay: 140ms; }
+#view-dashboard.active .kpi:nth-child(4) { animation-delay: 210ms; }
+#view-dashboard.active .kpi:nth-child(5) { animation-delay: 280ms; }
+#view-dashboard.active .kpi:nth-child(6) { animation-delay: 350ms; }
+#view-dashboard.active .kpi:nth-child(7) { animation-delay: 420ms; }
+@media (prefers-reduced-motion: reduce) {
+    .demo-view.active, #view-dashboard.active .kpi { animation: none; }
+    .demo-nav-item, .demo-nav { transition: none; }
+}
+
 .dash-cols {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

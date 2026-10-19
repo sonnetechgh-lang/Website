@@ -156,15 +156,39 @@
     const pretty = (ts) => new Date(ts).toLocaleString('en-GB', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
 
     /* ---------- dashboard ---------- */
+    // On first load the KPI numbers count up from zero (skipped for reduced motion).
+    let firstDashboard = true
+    function countUp(kpis) {
+        const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        const done = () => kpis.forEach(([el, value, show]) => { el.textContent = show(value) })
+        if (still || !window.requestAnimationFrame) return done()
+        const t0 = performance.now(), ms = 900
+        const step = (now) => {
+            const k = Math.min((now - t0) / ms, 1)
+            const ease = 1 - Math.pow(1 - k, 3)
+            kpis.forEach(([el, value, show]) => {
+                const v = value * ease
+                el.textContent = show(show === String ? Math.round(v) : v)
+            })
+            if (k < 1) requestAnimationFrame(step)
+            else done()
+        }
+        requestAnimationFrame(step)
+    }
     function renderDashboard() {
         const [start, end] = todayRange()
         const today = state.sales.filter((s) => s.at >= start && s.at <= end)
         const sales = today.reduce((sum, s) => sum + saleNet(s), 0)
-        els.kpiProducts.textContent = state.products.length
-        els.kpiSales.textContent = fmt(sales)
-        els.kpiCredit.textContent = fmt(state.customers.reduce((s, c) => s + c.credit, 0))
-        els.kpiLow.textContent = lowStock().length
-        els.kpiOut.textContent = state.products.filter((p) => p.stock <= 0).length
+        const kpis = [
+            [els.kpiProducts, state.products.length, String],
+            [els.kpiSales, sales, fmt],
+            [els.kpiCredit, state.customers.reduce((s, c) => s + c.credit, 0), fmt],
+            [els.kpiLow, lowStock().length, String],
+            [els.kpiOut, state.products.filter((p) => p.stock <= 0).length, String]
+        ]
+        if (firstDashboard) countUp(kpis)
+        else kpis.forEach(([el, value, show]) => { el.textContent = show(value) })
+        firstDashboard = false
         els.dashDate.textContent = new Date().toLocaleString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 
         const byPid = {}

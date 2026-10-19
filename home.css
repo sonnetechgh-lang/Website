@@ -60,7 +60,7 @@ figure { margin: 0; }
 /* Type */
 h1, h2, h3 { line-height: 1.15; margin: 0; color: var(--text); }
 h1 { font-size: clamp(36px, 4.6vw, 56px); font-weight: 800; letter-spacing: -0.035em; }
-h1 span { color: var(--primary); }
+h1 .accent { color: var(--primary); }
 h2 { font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -0.03em; }
 h3 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
 p { color: var(--body); font-size: 16px; }
@@ -236,7 +236,34 @@ main { overflow-x: clip; }
     .booking-dialog .booking-form { padding: 16px 20px 20px; }
     .footer-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
+/* Hero entrance: text rises in line by line, then the live demo settles into place. */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes settle { from { opacity: 0; transform: perspective(1600px) translateY(48px) rotateX(9deg) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes sweep { from { background-position: 100% 0; } to { background-position: 0 0; } }
+.hero .eyebrow, .hero h1 .line, .hero .intro, .hero .actions, .hero .caption { animation: rise 700ms cubic-bezier(.2, .7, .2, 1) both; }
+.hero h1 .line { display: inline-block; }
+.hero h1 .line:first-child { animation-delay: 80ms; }
+.hero h1 .accent { animation-delay: 200ms; }
+.hero .intro { animation-delay: 320ms; }
+.hero .actions { animation-delay: 420ms; }
+.hero .product-preview, .hero .preview-mobile { animation: settle 1100ms cubic-bezier(.16, .8, .24, 1) 520ms both; transform-origin: 50% 0; }
+.hero .caption { animation-delay: 900ms; }
+/* One light sweep across the accent line; it ends on solid #0284C7. */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .hero h1 .accent {
+        background: linear-gradient(100deg, var(--primary) 0 40%, #7DD3FC 50%, var(--primary) 60% 100%) 100% 0 / 250% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: rise 700ms cubic-bezier(.2, .7, .2, 1) 200ms both, sweep 1400ms ease-in-out 900ms both;
+    }
+}
+.button span[aria-hidden] { display: inline-block; transition: transform 160ms ease; }
+.button:hover span[aria-hidden] { transform: translate(2px, -2px); }
+
 @media (prefers-reduced-motion: reduce) {
+    .hero *, .hero .product-preview, .hero .preview-mobile { animation: none !important; }
+    .button span[aria-hidden] { transition: none; }
     .button, .stage img { transition: none; }
     .stage-progress { display: none; }
 }
