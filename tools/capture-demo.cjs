@@ -93,9 +93,61 @@ async function main() {
     await open('dashboard', { width: 390, height: 760, deviceScaleFactor: 2, isMobile: true, hasTouch: true })
     await shot('mobile-dashboard.webp')
 
+    /* Feature pages (/pos-system, /inventory, /industries, /about). */
+    await open('dashboard', desktop)
+    await shot('dashboard.webp', { clip: { x: 256, y: 65, width: 1024, height: 640 } })
+
+    await open('pos', desktop)
+    const grid = await page.$('#prod-grid')
+    await grid.screenshot({ path: path.join(OUT, 'product-cards.webp'), type: 'webp', quality: 82 })
+
+    // Cart close-ups for /pos-system: customer chosen, then Mobile Money.
+    await open('pos', { width: 1280, height: 1200, deviceScaleFactor: 2 })
+    await page.click('.pkg[data-pid="P01"]')
+    await page.click('.pkg[data-pid="P05"]')
+    await page.click('.pkg[data-pid="P05"]')
+    const cart = await page.$('.pos-cart')
+    await page.select('#check-customer', 'C2')
+    await page.select('#payment-select', 'credit')
+    await cart.screenshot({ path: path.join(OUT, 'cart-credit.webp'), type: 'webp', quality: 82 })
+    await page.select('#check-customer', 'C3')
+    await page.select('#payment-select', 'momo')
+    await page.type('#check-momo', 'MM-204518')
+    await cart.screenshot({ path: path.join(OUT, 'cart-momo.webp'), type: 'webp', quality: 82 })
+
+    // Tall viewport so the whole receipt fits on screen.
+    await open('pos', { width: 1280, height: 1200, deviceScaleFactor: 2 })
+    await page.click('.pkg[data-pid="P01"]')
+    await page.click('.pkg[data-pid="P05"]')
+    await page.click('.pkg[data-pid="P05"]')
+    await page.select('#check-customer', 'C2')
+    await page.select('#payment-select', 'momo')
+    await page.type('#check-momo', 'MM-204518')
+    await page.click('#complete-sale')
+    await wait(200)
+    await page.click('#view-receipt')
+    await wait(300)
+    const paper = await page.$('#receipt-paper')
+    await paper.screenshot({ path: path.join(OUT, 'receipt.webp'), type: 'webp', quality: 86 })
+
+    await open('pos', { width: 390, height: 760, deviceScaleFactor: 2, isMobile: true, hasTouch: true })
+    // On phones the cards sit below the fold, so tap them from inside the page.
+    await page.evaluate(() => ['P01', 'P05'].forEach((id) => document.querySelector(`.pkg[data-pid="${id}"]`).click()))
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await shot('mobile-pos.webp')
+
+    await open('products', { width: 390, height: 760, deviceScaleFactor: 2, isMobile: true, hasTouch: true })
+    await shot('mobile-products.webp')
+
     /* Social-sharing image (1200x630). */
     await open('dashboard', { width: 1200, height: 630, deviceScaleFactor: 1 })
     await page.screenshot({ path: path.join(OUT, 'og-dashboard.jpg'), type: 'jpeg', quality: 86 })
+    await open('pos', { width: 1200, height: 630, deviceScaleFactor: 1 })
+    await page.click('.pkg[data-pid="P01"]')
+    await page.click('.pkg[data-pid="P05"]')
+    await page.screenshot({ path: path.join(OUT, 'og-pos.jpg'), type: 'jpeg', quality: 86 })
+    await open('products', { width: 1200, height: 630, deviceScaleFactor: 1 })
+    await page.screenshot({ path: path.join(OUT, 'og-inventory.jpg'), type: 'jpeg', quality: 86 })
 
     await browser.close()
     server.close()
