@@ -4,12 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS System Demo | Sonnet Solutions Ghana Limited</title>
+    <title>Sonnet POS Demo: Interactive POS &amp; Inventory System | Sonnet Solutions</title>
     <meta name="description"
         content="Interactive demo of the Sonnet POS and management system. Explore sales, inventory, customers, credit and reports using fictional sample data.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.sonnetghana.com/demo">
     <meta name="theme-color" content="#F9FAFB">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Sonnet Solutions">
+    <meta property="og:title" content="Sonnet POS Demo">
+    <meta property="og:description" content="Try the Sonnet POS demo: make a sale, take Mobile Money, print a receipt and see the reports. All data is fictional.">
+    <meta property="og:url" content="https://www.sonnetghana.com/demo">
+    <meta property="og:image" content="https://www.sonnetghana.com/assets/demo/og-dashboard.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Sonnet POS demo dashboard with fictional sample data">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/png" href="LOGO/Black.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +28,7 @@
 </head>
 
 <body class="demo-body">
+    <h1 class="sr-only">Sonnet POS demo: an interactive point-of-sale and inventory system with fictional sample data</h1>
     <div class="demo-shell">
         <button class="demo-drawer-toggle" id="demo-drawer-toggle" type="button" aria-controls="demo-sidebar" aria-expanded="false">
             <span class="sr-only">Open demo navigation</span>
@@ -67,7 +78,7 @@
 
                 <section class="demo-view active" id="view-dashboard" aria-label="Dashboard">
                     <header class="view-head">
-                        <div><h1>Dashboard</h1>
+                        <div><h2 class="view-title">Dashboard</h2>
                         <p class="view-sub">Welcome back, Demo Operator</p></div>
                         <p id="dash-date" class="view-date"></p>
                     </header>
@@ -94,7 +105,7 @@
 
                 <section class="demo-view" id="view-pos" aria-label="New sale">
                     <header class="view-head">
-                        <div><h1>POS</h1>
+                        <div><h2 class="view-title">POS</h2>
                         <p class="view-sub">Tap fictional products to build a public demo sale.</p></div>
                     </header>
                     <div class="pos-grid">
@@ -161,7 +172,7 @@
 
                 <section class="demo-view" id="view-products" aria-label="Products and stock">
                     <header class="view-head">
-                        <div><h1>Product Management</h1>
+                        <div><h2 class="view-title">Product Management</h2>
                         <p class="view-sub">Manage your inventory and product catalog</p></div>
                         <button class="btn btn-primary btn-small" type="button" disabled>+ Add New Product</button>
                     </header>
@@ -183,7 +194,7 @@
 
                 <section class="demo-view" id="view-reports" aria-label="Reports">
                     <header class="view-head">
-                        <div><h1>Reports &amp; Analytics</h1>
+                        <div><h2 class="view-title">Reports &amp; Analytics</h2>
                         <p class="view-sub">View sales performance and inventory insights</p></div>
                     </header>
                     <div class="report-filter panel">

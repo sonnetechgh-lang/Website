@@ -208,7 +208,7 @@ button { font-family: inherit; }
     margin-bottom: 24px;
 }
 
-.view-head h1 {
+.view-head .view-title {
     color: #111827;
     font-size: 32px;
     line-height: 1.1;
@@ -594,7 +594,7 @@ ul.leader-list, ul.recent-list, ul.stats-list { list-style: none; margin: 0; pad
     .demo-layout { margin-left: 0; }
     .demo-main { padding: 24px 16px; }
     .view-head { align-items: flex-start; }
-    .view-head h1 { font-size: 28px; }
+    .view-head .view-title { font-size: 28px; }
     .view-date { text-align: left; }
     .dash-cols, .pos-grid, .report-filter, .report-kpis { grid-template-columns: 1fr; }
     .pos-cart { position: static; }

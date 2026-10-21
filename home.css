@@ -116,6 +116,18 @@ main { overflow-x: clip; }
 .custom-note { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; border-top: 1px solid var(--line); padding-top: 28px; margin: 88px 0 0; }
 .tag { display: inline-block; padding: 4px 10px; border-radius: 999px; background: var(--primary-soft); border: 1px solid #BAE6FD; color: var(--primary-deep); font-size: 13px; font-weight: 700; }
 
+/* FAQ */
+.faq { border-bottom: 1px solid var(--line); }
+.faq-list { max-width: 820px; border-top: 1px solid var(--line); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; cursor: pointer; list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: var(--radius); background: var(--primary-soft); color: var(--primary-deep); font-size: 20px; font-weight: 600; line-height: 1; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-item summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.faq-item h3 { font-size: 19px; letter-spacing: -0.01em; }
+.faq-item p { margin: -6px 0 22px; max-width: 720px; font-size: 17px; }
+
 /* Sale walkthrough */
 .walkthrough { background: var(--band); border-block: 1px solid var(--line); padding-block: 96px; }
 .walkthrough-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: 56px; align-items: center; }
