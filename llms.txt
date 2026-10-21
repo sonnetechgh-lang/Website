@@ -1,0 +1,25 @@
+# Sonnet Solutions
+
+> Sonnet Solutions Ghana Limited builds POS (point-of-sale) and management systems for businesses in Ghana. Its product, Sonnet POS, handles sales and checkout, products and stock, customer credit and business reports in one system. The company is based in Amasaman, Accra.
+
+## Sonnet POS
+
+- Sales and checkout: search the catalogue, add products to a cart and take payment by cash, Mobile Money (MoMo), credit or a customer's advance balance.
+- Receipts: every sale produces a receipt sized for 80mm thermal printers.
+- Products and stock: categories, batch numbers, expiry dates, prices and stock levels, with low-stock and out-of-stock flags. Stock updates automatically after each sale.
+- Customers: saved customer accounts with credit and advance balances.
+- Reports: revenue, transaction counts, average sale, best-selling products and payment mix.
+- Available on request for custom deployments: staff access, customer workflows and multi-branch management.
+- Pricing depends on the business and setup; quotes are given after a free walkthrough.
+
+## Links
+
+- [Homepage](https://www.sonnetghana.com/): overview, features, a step-by-step sale walkthrough and FAQ
+- [Interactive demo](https://www.sonnetghana.com/demo): the working Sonnet POS interface with fictional sample data
+
+## Contact
+
+- Email: info@sonnetghana.com
+- Telephone: +233 54 548 9242
+- WhatsApp: +233 25 794 0113
+- Location: Amasaman, Accra, Ghana
