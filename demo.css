@@ -596,7 +596,7 @@ ul.leader-list, ul.recent-list, ul.stats-list { list-style: none; margin: 0; pad
     .view-head { align-items: flex-start; }
     .view-head .view-title { font-size: 28px; }
     .view-date { text-align: left; }
-    .dash-cols, .pos-grid, .report-filter, .report-kpis { grid-template-columns: 1fr; }
+    .dash-cols, .pos-grid, .report-filter, .report-kpis { grid-template-columns: minmax(0, 1fr); }
     .pos-cart { position: static; }
     .pos-toolbar { align-items: stretch; flex-direction: column; }
     .pos-toolbar input { width: 100%; }
